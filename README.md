@@ -1,141 +1,169 @@
-# 高效能檔案刪除器 (High Performance Bulk Delete)
+-----
 
-## 專案描述
+# High-Performance Bulk Delete
 
-這是一個專為Windows系統設計的高效能批次檔案刪除工具，採用多重刪除策略和記憶體最佳化技術，能夠快速處理大量檔案和複雜目錄結構的刪除作業。
+## Project Description
 
-### 核心特色
+This is a high-performance batch file deletion tool designed for Windows systems. It employs multiple deletion strategies and memory optimization techniques to quickly process the deletion of large numbers of files and complex directory structures.
 
-- **極致速度**：採用多重刪除演算法，自動選擇最佳刪除策略
-- **即時顯示**：實時顯示正在刪除的檔案和目錄名稱
-- **記憶體最佳化**：串流處理技術，避免大型目錄結構造成記憶體溢出
-- **自我保護**：確保批次檔案在執行過程中不會被意外刪除
-- **容錯處理**：多層級錯誤處理，能夠處理檔案鎖定和權限問題
+### Core Features
 
-## 系統需求
+  - **Extreme Speed**: Utilizes multiple deletion algorithms to automatically select the optimal deletion strategy.
+  - **Real-time Display**: Shows the names of files and directories being deleted in real-time.
+  - **Memory Optimization**: Employs streaming processing techniques to prevent out-of-memory errors caused by large directory structures.
+  - **Self-Protection**: Ensures the batch file itself is not accidentally deleted during execution.
+  - **Fault Tolerance**: Features multi-level error handling to address file locking and permission issues.
 
-- Windows 7/8/10/11
-- 管理員權限（建議，用於處理系統保護檔案）
-- 足夠的系統資源處理大量檔案操作
+-----
 
-## 安裝與使用
+## System Requirements
 
-### 快速開始
+  - Windows 7/8/10/11
+  - Administrator privileges (recommended for handling system-protected files)
+  - Sufficient system resources to handle large file operations
 
-1. 將 `quick_delete.bat` 放置到需要清理的目標資料夾中
-2. 以右鍵點擊檔案，選擇「以系統管理員身分執行」
-3. 確認刪除操作後，程式將自動開始清理
+-----
 
-### 使用流程
+## Installation and Usage
+
+### Quick Start
+
+1.  Place `quick_delete.bat` into the target folder you wish to clean.
+2.  Right-click the file and select "Run as administrator."
+3.  After confirming the deletion operation, the program will automatically begin cleaning.
+
+### Usage Flow
 
 ```
-1. 程式啟動 → 顯示目標路徑
-2. 安全確認 → 輸入 Y 確認操作
-3. 檔案刪除 → 逐一顯示刪除進度
-4. 目錄清理 → 移除空目錄結構
-5. 進階清理 → 處理頑固檔案
-6. 完成報告 → 顯示執行時間和結果
+1. Program Start → Display Target Path
+2. Security Confirmation → Enter Y to Confirm Operation
+3. File Deletion → Display Deletion Progress for Each File
+4. Directory Cleanup → Remove Empty Directory Structures
+5. Advanced Cleanup → Handle Stubborn Files
+6. Completion Report → Display Execution Time and Results
 ```
 
-## 技術架構
+-----
 
-### 多階段刪除策略
+## Technical Architecture
 
-1. **標準刪除**：使用 `DEL` 和 `RD` 命令進行常規檔案刪除
-2. **目錄清理**：反向排序處理，從最深層目錄開始移除
-3. **屬性處理**：移除檔案保護屬性，處理唯讀檔案
-4. **強制清理**：針對系統鎖定檔案的進階處理
+### Multi-Stage Deletion Strategy
 
-### 記憶體最佳化技術
+1.  **Standard Deletion**: Uses `DEL` and `RD` commands for regular file deletion.
+2.  **Directory Cleanup**: Processes in reverse order, starting from the deepest directories.
+3.  **Attribute Handling**: Removes file protection attributes and handles read-only files.
+4.  **Forced Cleanup**: Advanced handling for system-locked files.
 
-- **串流處理**：使用 `FOR /R` 逐一處理檔案，避免記憶體累積
-- **變數管理**：採用區域變數範圍，確保記憶體及時釋放
-- **路徑最佳化**：使用 `PUSHD/POPD` 簡化路徑處理邏輯
+### Memory Optimization Techniques
 
-### 自我保護機制
+  - **Streaming Processing**: Uses `FOR /R` to process files one by one, preventing memory accumulation.
+  - **Variable Management**: Employs local variable scope to ensure timely memory release.
+  - **Path Optimization**: Uses `PUSHD/POPD` to simplify path handling logic.
 
-- **檔名檢查**：在刪除過程中跳過批次檔案本身
-- **備份還原**：關鍵階段建立臨時備份，確保執行完整性
-- **路徑驗證**：防止意外刪除系統關鍵目錄
+### Self-Protection Mechanism
 
-## 安全注意事項
+  - **Filename Check**: Skips the batch file itself during the deletion process.
+  - **Backup and Restore**: Creates temporary backups at critical stages to ensure execution integrity.
+  - **Path Validation**: Prevents accidental deletion of critical system directories.
 
-### 重要警告
+-----
 
-⚠️ **此工具會永久刪除檔案，無法復原**
-⚠️ **請確保已備份重要資料**
-⚠️ **建議先在測試環境中驗證**
+## Safety Precautions
 
-### 最佳實務
+### Important Warnings
 
-- 執行前仔細確認目標路徑
-- 關閉可能鎖定檔案的應用程式
-- 定期備份重要資料
-- 在非系統磁碟上進行測試
+⚠️ **This tool permanently deletes files and cannot be undone.**
+⚠️ **Please ensure you have backed up important data.**
+⚠️ **It is recommended to validate in a test environment first.**
 
-## 效能基準
+### Best Practices
 
-### 測試環境
-- 處理器：Intel i7-10700K
-- 記憶體：32GB DDR4
-- 儲存：NVMe SSD
+  - Carefully confirm the target path before execution.
+  - Close applications that might be locking files.
+  - Regularly back up important data.
+  - Test on non-system drives.
 
-### 效能表現
-- **小型檔案**（<1KB，10,000個）：約15秒
-- **混合檔案**（1KB-10MB，1,000個）：約8秒
-- **大型檔案**（>100MB，100個）：約25秒
-- **深層目錄**（10層，1,000個資料夾）：約12秒
+-----
 
-## 故障排除
+## Performance Benchmarks
 
-### 常見問題
+### Test Environment
 
-**Q：程式顯示「找不到批次檔」**
-A：確保批次檔案位於目標目錄中，且具有執行權限
+  - Processor: Intel i7-10700K
+  - Memory: 32GB DDR4
+  - Storage: NVMe SSD
 
-**Q：某些檔案無法刪除**
-A：檢查檔案是否被其他程式使用，或具有特殊權限設定
+### Performance Metrics
 
-**Q：記憶體使用量持續增長**
-A：關閉其他大量記憶體消耗的應用程式，重新執行
+  - **Small Files** (\<1KB, 10,000 files): Approximately 15 seconds
+  - **Mixed Files** (1KB-10MB, 1,000 files): Approximately 8 seconds
+  - **Large Files** (\>100MB, 100 files): Approximately 25 seconds
+  - **Deep Directories** (10 layers, 1,000 folders): Approximately 12 seconds
 
-**Q：刪除速度較慢**
-A：檢查防毒軟體設定，暫時停用即時掃描功能
+-----
 
-### 錯誤代碼
+## Troubleshooting
 
-- **錯誤1**：權限不足，請以管理員身分執行
-- **錯誤2**：目標路徑不存在或無法存取
-- **錯誤5**：檔案被其他程式鎖定
+### Common Issues
 
-## 版本資訊
+**Q: The program displays "Batch file not found."**
+A: Ensure the batch file is located in the target directory and has execution permissions.
 
-### 當前版本：v2.1
-- 新增即時檔案顯示功能
-- 最佳化記憶體使用效率
-- 強化自我保護機制
-- 改善錯誤處理邏輯
+**Q: Some files cannot be deleted.**
+A: Check if the files are being used by other programs or have special permission settings.
 
-### 更新歷程
-- **v2.0**：重構核心刪除邏輯，提升執行速度
-- **v1.5**：新增多重刪除策略
-- **v1.0**：基礎功能實作
+**Q: Memory usage continues to increase.**
+A: Close other memory-intensive applications and re-run the program.
 
-## 授權資訊
+**Q: Deletion speed is slow.**
+A: Check your antivirus software settings; temporarily disable real-time scanning.
 
-本專案採用 MIT 授權條款，允許自由使用、修改和分發。
+### Error Codes
 
-## 技術支援
+  - **Error 1**: Insufficient permissions; please run as administrator.
+  - **Error 2**: Target path does not exist or is inaccessible.
+  - **Error 5**: File is locked by another program.
 
-如遇到技術問題或需要功能建議，請：
-- 確認已閱讀故障排除章節
-- 收集錯誤訊息和系統環境資訊
-- 描述具體的使用情境和預期結果
+-----
 
-## 貢獻指南
+## Version Information
 
-歡迎提供程式碼最佳化建議，特別是：
-- 執行速度最佳化
-- 記憶體使用效率改善
-- 錯誤處理機制強化
-- 跨平台相容性改進
+### Current Version: v2.1
+
+  - Added real-time file display functionality.
+  - Optimized memory usage efficiency.
+  - Enhanced self-protection mechanism.
+  - Improved error handling logic.
+
+### Update History
+
+  - **v2.0**: Refactored core deletion logic, improving execution speed.
+  - **v1.5**: Added multi-stage deletion strategy.
+  - **v1.0**: Implemented basic functionalities.
+
+-----
+
+## License Information
+
+This project is licensed under the MIT License, allowing free use, modification, and distribution.
+
+-----
+
+## Technical Support
+
+If you encounter technical issues or have feature suggestions, please:
+
+  - Confirm you have read the troubleshooting section.
+  - Gather error messages and system environment information.
+  - Describe the specific usage scenario and expected outcome.
+
+-----
+
+## Contribution Guidelines
+
+Contributions for code optimization are welcome, especially for:
+
+  - Execution speed optimization
+  - Memory usage efficiency improvement
+  - Error handling mechanism enhancement
+  - Cross-platform compatibility improvements
